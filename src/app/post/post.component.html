@@ -1,0 +1,20 @@
+<div id="post-container" class="card col">
+    <div id="title" class="row-4 text-center">
+        <a [routerLink]="['/article/id', article.id]">
+            {{ post.title }}
+        </a>
+    </div>
+
+    <div class="row-4 text-center article-image-container">
+        <img class="rounded img-fluid" 
+            [src]="post.imagePath" 
+            alt="nemesis"/>
+    </div>
+
+    <div id="description" class="row-4">
+        <p class="text-center">
+            {{ post.description }}
+        </p>
+    </div>
+</div>
+

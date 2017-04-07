@@ -1,0 +1,23 @@
+#post-container {
+    margin-bottom: 15px;
+}
+
+.article-image-container {
+    border: 3px solid black;
+}
+
+a {
+    color: black;
+}
+
+#title {
+    font-size: 34px;
+    text-decoration: underline;
+    margin-bottom: 5px;
+}
+
+#description {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #515151;
+}

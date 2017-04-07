@@ -1,10 +1,10 @@
-import { FakenewsPage } from './app.po';
+import { NewsPage } from './app.po';
 
-describe('fakenews App', () => {
-  let page: FakenewsPage;
+describe('news App', () => {
+  let page: NewsPage;
 
   beforeEach(() => {
-    page = new FakenewsPage();
+    page = new NewsPage();
   });
 
   it('should display message saying app works', () => {

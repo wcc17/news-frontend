@@ -1,6 +1,6 @@
 import { browser, element, by } from 'protractor';
 
-export class FakenewsPage {
+export class NewsPage {
   navigateTo() {
     return browser.get('/');
   }

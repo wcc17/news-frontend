@@ -1,0 +1,49 @@
+#header {
+    margin: 25px;
+}
+@media screen and (max-width: 768px) {
+    #header {
+        font-size:36px;
+    }
+    #full-ad-container {
+        display: none;
+    }
+    #small-ad-container {
+        display: inherit;
+    }
+}
+@media(min-width:768px) {
+    #header {
+        font-size: 72px;
+    }
+    #full-ad-container {
+        display: inherit;
+    }
+    #small-ad-container {
+        display: none;
+    }
+}
+
+#full-ad-container {
+    /*border: 1px solid blue;*/
+}
+#small-ad-container {
+    margin-bottom: 10px;
+}
+
+#main-container {
+    background-color: white;
+    border: 1px solid black;
+}
+#header-container {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+#navigation-bar {
+    font-size: 20px;
+}
+#nav-container {
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    margin-bottom: 15px;
+}

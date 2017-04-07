@@ -1,0 +1,10 @@
+<div id="article-container"> 
+   <div *ngIf="loading">Loading your article...</div>
+   <app-article *ngIf="loading == false" [article]="this.article"></app-article>
+   
+   <!-- THIS SHOULD BE RESTRICTED IN PRODUCTION -->
+   <button type="button" 
+           class="btn btn-primary" 
+           *ngIf="preview" 
+           [routerLink]="['/create/prog', article.title, article.subTitle, article.publishDate, article.content]">Back</button>
+</div>

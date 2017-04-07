@@ -1,0 +1,21 @@
+<div *ngIf="loading">Loading articles...</div>
+
+<div *ngIf="loading == false">
+  <div id="article-list-container">
+    <div *ngFor="let article of articles">
+      <app-list-item-post [article]=article></app-list-item-post>
+    </div>
+  </div>
+
+  <nav>
+    <ul class="pagination">
+      <li class="page-item"><a class="page-link" (click)="setPage(this.currentPageNumber-1)">Previous</a></li>
+
+      <li class="page-item" *ngFor="let pageNumber of pageNumbers">
+        <a class="page-link" (click)="setPage(pageNumber)">{{ pageNumber }}</a>
+      </li>
+
+      <li class="page-item"><a class="page-link" (click)="setPage(this.currentPageNumber+1)">Next</a></li>
+    </ul>
+  </nav>
+</div>

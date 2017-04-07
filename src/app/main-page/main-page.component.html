@@ -1,0 +1,22 @@
+<div *ngIf="loading">Loading...</div>
+<div *ngIf="loading == false" id="article-container" class="row-sm">
+
+  <div class="row">
+    <div id="main-article" class="col-sm-8"> 
+      <app-post
+        *ngIf="loading == false"
+          [article]="this.topArticle"
+          imagePath="/assets/images/kellyanne-conway.jpg">
+      </app-post>
+    </div>
+
+    <div id="side-articles" class="col-sm-4">
+      <div *ngFor="let article of articles">
+        <app-small-post
+          [article]=article>
+        </app-small-post>
+      </div>
+    </div>
+  </div>
+    
+</div>

@@ -1,0 +1,17 @@
+#title {
+    margin-bottom: 0px; /* overriding bootstrap margin-bottom from p: text-center */
+    
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 18px;
+}
+
+#description {
+    font-style: italic;
+    font-size: 14px;
+    color: #515151;
+}
+
+a {
+    color: black;
+}

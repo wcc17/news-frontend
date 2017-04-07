@@ -1,0 +1,30 @@
+<div class="container">
+  <div class="article-input row" (input)="titleInputChanged(this.article.title)">
+    <h5>Title:</h5>
+    <input type="text" class="form-control" [(ngModel)]="this.article.title" required/>
+  </div>
+
+  <div class="article-input row">
+    <h5>Name:</h5>
+    <input type="text" class="form-control" [(ngModel)]="this.article.name" disabled=true/>
+  </div>
+
+  <div class="article-input row">
+    <h5>SubTitle:</h5>
+    <input type="text" class="form-control" [(ngModel)]="this.article.subTitle" required/>
+  </div>
+
+  <div class="article-input row">
+    <h5>Date:</h5>
+    <input type="date" class="form-control" [(ngModel)]="this.article.publishDate" required/>
+  </div>
+
+  <div class="article-input row">
+    <h5>Content:</h5>
+    <textarea type="text" class="form-control" [(ngModel)]="this.article.content" required></textarea>
+  </div>
+
+  <div class="article-input row">
+    <button type="button" class="btn btn-primary" [routerLink]="['/article/preview', article.title, article.subTitle, article.publishDate, article.content]">Preview</button>
+  </div>
+</div>
