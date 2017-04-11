@@ -35,10 +35,31 @@ export class ArticleService {
     return this.executeRequest(queryUrl);
   }
 
+  //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
+  public createArticle(article: Article): Observable<number> {
+    //TODO: remove tho      http://localhost:8080/create?name=new_article&title=new_title&sub=new_sub&date=2017-03-18&content=thisistestcontent
+    let queryUrl: string = `${this.apiUrl}/create?name=${article.name}&title=${article.title}&sub=${article.subTitle}&date=${article.publishDate}&content=${article.content}`;
+    return this.executeRequest(queryUrl);
+  }
+
+  public convertPublishDate(article: Article): Article {
+    let date: any = article.publishDate;
+    let year: number = date.year;
+    let month: number = date.monthValue - 1; //javascript takes a 0 indexed month number
+    let day: number = date.dayOfMonth;
+
+    //new Date(year, month, day, hours, minutes, seconds, milliseconds)
+    let newDate: Date = new Date(year, month, day, 0, 0, 0, 0);
+    article.publishDate = newDate;
+
+    return article;
+  }
+
   private executeRequest(queryUrl: string): Observable<any> {
     // console.log(queryUrl);
     return this.http
       .get(queryUrl)
       .map((response:Response) => <Article>response.json());
   }
+
 }

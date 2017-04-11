@@ -110,6 +110,8 @@ export class ArticlePageComponent implements OnInit {
   }
 
   onSuccess(article: Article) {
+    article = this.articleService.convertPublishDate(article);
+
     this.loading = false;
     this.article = article;
   }
@@ -117,6 +119,17 @@ export class ArticlePageComponent implements OnInit {
   onError(error: any) {
     console.log(error);
     this.router.navigate(["error"]);
+  }
+
+  getPublishDateString(): string {
+    if(this.article.publishDate != null) {
+      let year: number = this.article.publishDate.getFullYear();
+      let month: number = this.article.publishDate.getMonth();
+      let day: number = this.article.publishDate.getDate();
+
+      let dateString: string = year + "-" + month + "-" + day;
+      return dateString;
+    }
   }
 
   ngOnInit() {

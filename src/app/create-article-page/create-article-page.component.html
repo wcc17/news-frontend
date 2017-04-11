@@ -27,4 +27,8 @@
   <div class="article-input row">
     <button type="button" class="btn btn-primary" [routerLink]="['/article/preview', article.title, article.subTitle, article.publishDate, article.content]">Preview</button>
   </div>
+
+  <div class="article-input row">
+    <button type="button" class="btn btn-primary" (click)="saveArticle()">Save</button>
+  </div>
 </div>

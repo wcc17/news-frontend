@@ -34,6 +34,9 @@ export class MainPageComponent implements OnInit {
   }
 
   onSuccess(articles: Article[]) {
+    for(let article of articles) {
+      article = this.articleService.convertPublishDate(article);
+    }
     this.loading = false;
 
     this.articles = articles;
