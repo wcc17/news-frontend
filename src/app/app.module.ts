@@ -28,7 +28,7 @@ const childRoutes: Routes = [
   { path: 'article/preview/:title/:subtitle/:date/:content', component: ArticlePageComponent }, //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
   { path: 'allArticles', component: AllArticlesPageComponent },
   { path: 'create', component: CreateArticlePageComponent }, //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
-  { path: 'create/prog/:title/:subtitle/:date/:content', component: CreateArticlePageComponent },
+  { path: 'create/prog/:id/:title/:subtitle/:date/:content', component: CreateArticlePageComponent },
 ]
 
 const routes: Routes = [

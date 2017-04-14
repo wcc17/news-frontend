@@ -37,8 +37,19 @@ export class ArticleService {
 
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   public createArticle(article: Article): Observable<number> {
-    //TODO: remove tho      http://localhost:8080/create?name=new_article&title=new_title&sub=new_sub&date=2017-03-18&content=thisistestcontent
     let queryUrl: string = `${this.apiUrl}/create?name=${article.name}&title=${article.title}&sub=${article.subTitle}&date=${article.publishDate}&content=${article.content}`;
+    return this.executeRequest(queryUrl);
+  }
+
+  //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
+  public updateArticle(article: Article): Observable<number> {
+    let queryUrl: string = `${this.apiUrl}/update?id=${article.id}&name=${article.name}&title=${article.title}&sub=${article.subTitle}&date=${article.publishDate}&content=${article.content}`;
+    return this.executeRequest(queryUrl);
+  }
+
+  //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
+  public deleteArticle(article: Article): Observable<number> {
+    let queryUrl: string = `${this.apiUrl}/delete?id=${article.id}`;
     return this.executeRequest(queryUrl);
   }
 

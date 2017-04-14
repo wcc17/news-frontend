@@ -19,6 +19,7 @@ export class CreateArticlePageComponent implements OnInit {
   }
 
   loadParams(route: any): void {
+    route.params.subscribe(params => { this.article.id = params['id']; });
     route.params.subscribe(params => { this.article.title = params['title']; });
     route.params.subscribe(params => { this.article.subTitle = params['subtitle']; });
     route.params.subscribe(params => { this.article.publishDate = params['date']; });
@@ -34,11 +35,34 @@ export class CreateArticlePageComponent implements OnInit {
   titleInputChanged() {
     this.article.name = this.article.title;
     this.article.name = this.article.name.split(' ').join('-');
-    console.log(this.article.name);
+  }
+
+  //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
+  onSaveClick() {
+    if(this.article.id) {
+      this.updateArticle();
+    } else {
+      this.saveArticle();
+    }
+  }
+
+  //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
+  updateArticle() {
+    console.log("CreateArticlePage - updateArticle called");
+    this.articleService.updateArticle(this.article)
+      .subscribe(
+        (articleId: number) => {
+          this.onRequestSuccess(articleId);
+        },
+        error => {
+          this.onError(error);
+        }
+      )
   }
 
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   saveArticle() {
+    console.log("CreateArticlePage - saveArticle called");
     this.articleService.createArticle(this.article)
       .subscribe(
         (articleId: number) => {

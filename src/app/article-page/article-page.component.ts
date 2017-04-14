@@ -109,6 +109,22 @@ export class ArticlePageComponent implements OnInit {
       );
   }
 
+  deleteArticle() {
+    this.articleService.deleteArticle(this.article)
+      .subscribe(
+        (success: number) => {
+          if(success >= 0) {
+            this.router.navigate(["allArticles"]);
+          } else {
+            this.onError("Error deleting article");
+          }
+        },
+        error => {
+          this.onError(error);
+        }
+      );
+  }
+
   onSuccess(article: Article) {
     article = this.articleService.convertPublishDate(article);
 
