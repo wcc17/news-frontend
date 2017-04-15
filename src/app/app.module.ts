@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AlertModule } from 'ng2-bootstrap';
 import { CollapseModule } from 'ng2-bootstrap';
+import { PaginationModule } from 'ng2-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
@@ -56,6 +57,7 @@ const routes: Routes = [
     HttpModule,
     AlertModule.forRoot(),
     CollapseModule.forRoot(),
+    PaginationModule.forRoot(),
     
     RouterModule.forRoot(routes)
   ],

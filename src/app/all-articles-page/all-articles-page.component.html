@@ -7,22 +7,5 @@
     </div>
   </div>
 
-  <nav>
-    <ul class="pagination">
-      <li class="page-item" *ngIf="this.currentPageNumber > 1"><a class="page-link" (click)="setPage(this.currentPageNumber-1)">Previous</a></li>
-      <li class="page-item disabled" *ngIf="this.currentPageNumber == 1"><a class="page-link" (click)="setPage(this.currentPageNumber-1)" tabIndex="-1">Previous</a></li>
-
-      <div *ngFor="let pageNumber of pageNumbers">
-        <li class="page-item" *ngIf="pageNumber != currentPageNumber">
-          <a class="page-link" (click)="setPage(pageNumber)">{{ pageNumber }}</a>
-        </li>
-        <li class="page-item active" *ngIf="pageNumber == currentPageNumber">
-          <a class="page-link" (click)="setPage(pageNumber)">{{ pageNumber }}</a>
-        </li>
-      </div>
-
-      <li class="page-item" *ngIf="this.currentPageNumber < maxPageNumber"><a class="page-link" (click)="setPage(this.currentPageNumber+1)">Next</a></li>
-      <li class="page-item disabled" *ngIf="this.currentPageNumber == maxPageNumber"><a class="page-link" (click)="setPage(this.currentPageNumber+1)" tabIndex="-1">Next</a></li>
-    </ul>
-  </nav>
+  <pagination [rotate]="true" [boundaryLinks]="true" [maxSize]="5" [totalItems]="articleCount" [(ngModel)]="currentPageNumber" (pageChanged)="setPage($event)"></pagination>
 </div>
