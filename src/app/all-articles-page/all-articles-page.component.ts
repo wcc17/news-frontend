@@ -31,7 +31,7 @@ export class AllArticlesPageComponent implements OnInit {
   }
 
   setPage(newPageNumber: number) {
-    if( (newPageNumber > 0) && (newPageNumber <= (this.articleCount % PAGE_SIZE)+1)) {
+    if( (newPageNumber > 0) && (newPageNumber <= this.maxPageNumber)) {
       console.log("New Page number in setPage(): " + newPageNumber);
 
       this.currentPageNumber = newPageNumber;
@@ -56,14 +56,33 @@ export class AllArticlesPageComponent implements OnInit {
       startIndex = 1;
       endIndex = pageLimit+1;
     } else {
-      startIndex = this.currentPageNumber;
-      endIndex = this.currentPageNumber + pageLimit;
-    }
+      if(this.currentPageNumber < 3) {
+        //force behavior for the first few pages
+        startIndex = 1;
+      } else {
+        startIndex = this.currentPageNumber - 2;
+      }
 
+      if(endIndex > this.maxPageNumber) {
+        endIndex = this.maxPageNumber;
+      } else {
+        endIndex = startIndex + (pageLimit - 1);
+      }
+
+      console.log("startIndex: " + startIndex);
+      console.log("endIndex: " + endIndex);
+    }
     
     for(var i = startIndex; i <= endIndex; i++) {
-      if(i <= pageLimit) {
+      if(i <= this.maxPageNumber) {
         this.pageNumbers.push(i);
+      }
+    }
+
+    //force behavior for the last few pages if there aren't enough on screen
+    if(this.pageNumbers.length < pageLimit) {
+      for(var i = 0; i <= pageLimit - this.pageNumbers.length; i++) {
+        this.pageNumbers.unshift(this.pageNumbers[0] - 1);
       }
     }
   }
@@ -85,13 +104,17 @@ export class AllArticlesPageComponent implements OnInit {
     this.articleService.getArticleCount()
       .subscribe(
         (count: number) => {
-          this.articleCount = count;
-          this.fillPageNumbers();
+          this.onArticleCount(count);
         },
         error => {
           this.onError(error);
         }
       );
+  }
+
+  onArticleCount(count: number) {
+    this.articleCount = count;
+    this.fillPageNumbers();
   }
 
   onError(error: any) {
