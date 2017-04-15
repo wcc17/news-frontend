@@ -15,6 +15,7 @@ export class AllArticlesPageComponent implements OnInit {
   articles: Article[];
   articleCount: number;
   currentPageNumber: number;
+  maxPageNumber: number;
   pageNumbers: number[];
 
   constructor(@Inject(ArticleService) private articleService: ArticleService, private router: Router) { 
@@ -43,13 +44,14 @@ export class AllArticlesPageComponent implements OnInit {
     this.pageNumbers = [];
 
     let pageLimit: number = 5;
-    let maxPages: number = ((this.articleCount % PAGE_SIZE)+1);
-    console.log("max pages" + maxPages);
+    this.maxPageNumber = Math.ceil(this.articleCount / PAGE_SIZE);
+    console.log("article count: " + this.articleCount);
+    console.log("max pages: " + this.maxPageNumber);
     
     let startIndex: number;
     let endIndex: number;
-    if(maxPages < pageLimit) {
-      pageLimit = maxPages
+    if(this.maxPageNumber < pageLimit) {
+      pageLimit = this.maxPageNumber
 
       startIndex = 1;
       endIndex = pageLimit+1;
