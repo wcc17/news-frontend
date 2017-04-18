@@ -27,7 +27,8 @@ export class CreateArticlePageComponent implements OnInit {
     this.route.params.subscribe(params => { this.article.publishDate = params['date']; });
     this.route.params.subscribe(params => { this.article.content = params['content']; });
 
-    console.log("loading params on create-article page");
+    this.article.publishDate = this.articleService.convertPublishDate(this.article);
+
     if(this.article.title) {
       this.titleInputChanged();
     }
@@ -36,6 +37,7 @@ export class CreateArticlePageComponent implements OnInit {
   titleInputChanged() {
     this.article.name = this.article.title;
     this.article.name = this.article.name.split(' ').join('-');
+    this.article.name = this.article.name.toLowerCase();
   }
 
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION

@@ -6,7 +6,7 @@
       <app-post
         *ngIf="loading == false"
           [article]="this.topArticle"
-          imagePath="/assets/images/kellyanne-conway.jpg">
+          [imagePath]="this.getTopArticleImagePath()">
       </app-post>
     </div>
 

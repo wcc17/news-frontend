@@ -5,8 +5,8 @@ import { Article } from '../article/article.model';
 
 @Injectable()
 export class ArticleService {
-  apiUrl: string = "http://localhost:8080";
-  // apiUrl: string = "http://104.236.209.190:8080";
+  // apiUrl: string = "http://localhost:8080";
+  apiUrl: string = "http://104.236.209.190:8080";
 
   constructor(public http: Http) { }
 
@@ -53,19 +53,6 @@ export class ArticleService {
     return this.executeRequest(queryUrl);
   }
 
-  public convertPublishDate(article: Article): Article {
-    let date: any = article.publishDate;
-    let year: number = date.year;
-    let month: number = date.monthValue - 1; //javascript takes a 0 indexed month number
-    let day: number = date.dayOfMonth;
-
-    //new Date(year, month, day, hours, minutes, seconds, milliseconds)
-    let newDate: Date = new Date(year, month, day, 0, 0, 0, 0);
-    article.publishDate = newDate;
-
-    return article;
-  }
-
   private executeRequest(queryUrl: string): Observable<any> {
     // console.log(queryUrl);
     return this.http
@@ -73,4 +60,31 @@ export class ArticleService {
       .map((response:Response) => <Article>response.json());
   }
 
+  public convertPublishDate(article: Article): Date {
+    let publishDate: any = article.publishDate;
+
+    let year: number = publishDate.year;
+    let month: number = publishDate.monthValue - 1; //javascript takes a 0 indexed month number
+    let day: number = publishDate.dayOfMonth;
+
+    //new Date(year, month, day, hours, minutes, seconds, milliseconds)
+    let newDate: Date = new Date(year, month, day, 0, 0, 0, 0);
+    return newDate;
+  }
+
+  //DO NOT use padded numbers (01, 02 instead of 1, 2) in image path on filesystem
+  public getArticleImagePath(article: Article): string {
+      if(article.publishDate && article.name) {
+          let year: string = article.publishDate.getFullYear().toString();
+          let month: string = (article.publishDate.getMonth()+1).toString(); //javascript month is 0 indexed
+          let day: string = article.publishDate.getDate().toString();
+          
+          //TODO: NOT ALL IMAGES WILL BE JPEGS! WHAT DO. can i check for local file existence?
+          let path: string = 'assets/images/article/' + year + '/' + month + '-' + day + '/' + article.name + '.jpg';
+          return path;
+      }
+
+      //TODO: need to handle this situation better
+      return '';
+  }
 }

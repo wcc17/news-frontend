@@ -17,23 +17,27 @@ export class ArticlePageComponent implements OnInit {
   data: Object;
   loading: boolean;
   preview: boolean = false; //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
-  article: Article = new Article();
+  article: Article;
 
   constructor(@Inject(ArticleService) private articleService: ArticleService, 
               private route: ActivatedRoute,
               private router: Router) {
     this.loading = true;
+  }
+
+  ngOnInit() {
+    this.article = new Article();
 
     let urlId: string = this.route.snapshot.url[URL_ID_INDEX].toString();
     switch(urlId) {
       case ID_ROUTE_URL:
-        this.loadIdParam(route);
+        this.loadIdParam(this.route);
         break;
       case NAME_ROUTE_URL:
-        this.loadNameParam(route);
+        this.loadNameParam(this.route);
         break;
       case PREVIEW_ROUTE_URL: //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
-        this.loadPreviewParam(route);
+        this.loadPreviewParam(this.route);
     }
   }
 
@@ -126,7 +130,7 @@ export class ArticlePageComponent implements OnInit {
   }
 
   onSuccess(article: Article) {
-    article = this.articleService.convertPublishDate(article);
+    article.publishDate = this.articleService.convertPublishDate(article);
 
     this.loading = false;
     this.article = article;
@@ -147,8 +151,4 @@ export class ArticlePageComponent implements OnInit {
       return dateString;
     }
   }
-
-  ngOnInit() {
-  }
-
 }

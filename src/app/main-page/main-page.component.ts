@@ -18,7 +18,6 @@ export class MainPageComponent implements OnInit {
   constructor(@Inject(ArticleService) private articleService: ArticleService,
               private router: Router) {
     this.loading = true;
-    this.loadArticles();
   }
 
   loadArticles() {
@@ -35,7 +34,7 @@ export class MainPageComponent implements OnInit {
 
   onSuccess(articles: Article[]) {
     for(let article of articles) {
-      article = this.articleService.convertPublishDate(article);
+      article.publishDate = this.articleService.convertPublishDate(article);
     }
     this.loading = false;
 
@@ -48,7 +47,12 @@ export class MainPageComponent implements OnInit {
     this.router.navigate(["error"]);
   }
 
+  getTopArticleImagePath() {
+    return this.articleService.getArticleImagePath(this.topArticle);
+  }
+
   ngOnInit() {
+    this.loadArticles();
   }
 
 }
