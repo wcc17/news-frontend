@@ -6,14 +6,14 @@
    <button type="button" 
            class="btn btn-primary" 
            *ngIf="preview" 
-           [routerLink]="['/create/prog', article.id, article.title, article.subTitle, article.publishDate, article.content]">Back</button>
+           [routerLink]="['/create/prog', article.title, article.subTitle, article.publishDate, article.content]">Back</button>
 
    <!-- TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION -->
    <!-- this needs to check if production is active or just needs to be commented out for the copy on digitalOcean -->
     <button type="button" 
            class="btn btn-primary"
            *ngIf="preview == false"
-           [routerLink]="['/create/prog', article.id, article.title, article.subTitle, getPublishDateString(), article.content]">Edit</button>
+           [routerLink]="['/create/edit', article.id, article.title, article.subTitle, getPublishDateString(), article.content]">Edit</button>
 
    <!-- TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION -->
    <!-- this needs to check if production is active or just needs to be commented out for the copy on digitalOcean -->

@@ -13,15 +13,14 @@ export class CreateArticlePageComponent implements OnInit {
 
   constructor(@Inject(ArticleService) private articleService: ArticleService,
               private route: ActivatedRoute,
-              private router: Router) { 
-  }
+              private router: Router) { }
 
   ngOnInit() {
-    this.article = new Article();
     this.loadParams();
   }
 
   loadParams(): void {
+    this.article = new Article();
     this.route.params.subscribe(params => { this.article.id = params['id']; });
     this.route.params.subscribe(params => { this.article.title = params['title']; });
     this.route.params.subscribe(params => { this.article.subTitle = params['subtitle']; });
@@ -29,7 +28,6 @@ export class CreateArticlePageComponent implements OnInit {
     this.route.params.subscribe(params => { this.article.content = params['content']; });
 
     console.log("loading params on create-article page");
-    console.log(this.article);
     if(this.article.title) {
       this.titleInputChanged();
     }
