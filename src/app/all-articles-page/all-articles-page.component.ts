@@ -20,7 +20,9 @@ export class AllArticlesPageComponent implements OnInit {
   constructor(@Inject(ArticleService) private articleService: ArticleService, private router: Router) { 
     this.loading = true;
     this.currentPageNumber = 1;
+  }
 
+  ngOnInit() {
     this.initialize();
   }
 
@@ -67,8 +69,4 @@ export class AllArticlesPageComponent implements OnInit {
     console.log(error);
     this.router.navigate(["error"]);
   }
-
-  ngOnInit() {
-  }
-
 }

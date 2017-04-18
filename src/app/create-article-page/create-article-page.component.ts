@@ -14,19 +14,22 @@ export class CreateArticlePageComponent implements OnInit {
   constructor(@Inject(ArticleService) private articleService: ArticleService,
               private route: ActivatedRoute,
               private router: Router) { 
-    this.article = new Article();
-    this.loadParams(route);
   }
 
-  loadParams(route: any): void {
-    route.params.subscribe(params => { this.article.id = params['id']; });
-    route.params.subscribe(params => { this.article.title = params['title']; });
-    route.params.subscribe(params => { this.article.subTitle = params['subtitle']; });
-    route.params.subscribe(params => { this.article.publishDate = params['date']; });
-    route.params.subscribe(params => { this.article.content = params['content']; });
+  ngOnInit() {
+    this.article = new Article();
+    this.loadParams();
+  }
+
+  loadParams(): void {
+    this.route.params.subscribe(params => { this.article.id = params['id']; });
+    this.route.params.subscribe(params => { this.article.title = params['title']; });
+    this.route.params.subscribe(params => { this.article.subTitle = params['subtitle']; });
+    this.route.params.subscribe(params => { this.article.publishDate = params['date']; });
+    this.route.params.subscribe(params => { this.article.content = params['content']; });
 
     console.log("loading params on create-article page");
-    
+    console.log(this.article);
     if(this.article.title) {
       this.titleInputChanged();
     }
@@ -90,8 +93,4 @@ export class CreateArticlePageComponent implements OnInit {
     //otherwise just print a message that says error from API
     //pretty low priority though. I'm the only one who will use this page and I can look at the console
   }
-
-  ngOnInit() {
-  }
-
 }
