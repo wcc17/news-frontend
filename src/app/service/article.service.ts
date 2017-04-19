@@ -6,33 +6,33 @@ import { Article } from '../article/article.model';
 
 @Injectable()
 export class ArticleService {
-  apiUrl: string = "http://localhost:8080";
-  // apiUrl: string = "http://104.236.209.190:8080";
+  apiUrl: string = "http://localhost:8080/article";
+  // apiUrl: string = "http://104.236.209.190:8080/article";
 
   constructor(public http: Http, private router: Router) { }
 
   public getPageOfArticles(pageNumber: number, pageSize: number): Observable<Article[]> {
-    let queryUrl: string = `${this.apiUrl}/articles?page=${pageNumber}&size=${pageSize}`;
+    let queryUrl: string = `${this.apiUrl}?page=${pageNumber}&size=${pageSize}`;
     return this.executeGetRequest(queryUrl);
   }
 
   public getArticleCount(): Observable<number> {
-    let queryUrl: string = `${this.apiUrl}/articleCount`;
+    let queryUrl: string = `${this.apiUrl}/count`;
     return this.executeGetRequest(queryUrl);
   }
 
   public getTopArticles(numberToLoad: number): Observable<Article[]> {
-    let queryUrl: string = `${this.apiUrl}/topArticles?number=${numberToLoad}`;
+    let queryUrl: string = `${this.apiUrl}/top?number=${numberToLoad}`;
     return this.executeGetRequest(queryUrl);
   }
 
   public getArticleById(articleId: number): Observable<Article> {
-    let queryUrl: string = `${this.apiUrl}/article?id=${articleId}`;
+    let queryUrl: string = `${this.apiUrl}?id=${articleId}`;
     return this.executeGetRequest(queryUrl);
   }
 
   public getArticleByName(articleName: string): Observable<Article> {
-    let queryUrl: string = `${this.apiUrl}/article?name=${articleName}`;
+    let queryUrl: string = `${this.apiUrl}?name=${articleName}`;
     return this.executeGetRequest(queryUrl);
   }
 
