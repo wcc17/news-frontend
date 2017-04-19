@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import { Headers, Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Article } from '../article/article.model';
@@ -13,7 +13,7 @@ export class ArticleService {
 
   public getPageOfArticles(pageNumber: number, pageSize: number, callback: any): void {
     let queryUrl: string = `${this.apiUrl}/articles?page=${pageNumber}&size=${pageSize}`;
-    this.executeRequest(queryUrl)
+    this.executeGetRequest(queryUrl)
       .subscribe(
         (articles: Article[]) => {
           articles = this.convertPublishDatesFromAPI(articles);
@@ -27,7 +27,7 @@ export class ArticleService {
 
   public getArticleCount(callback: any): void {
     let queryUrl: string = `${this.apiUrl}/articleCount`;
-    this.executeRequest(queryUrl)
+    this.executeGetRequest(queryUrl)
       .subscribe(
         (count: number) => {
           callback(count);
@@ -40,7 +40,7 @@ export class ArticleService {
 
   public getTopArticles(numberToLoad: number, callback: any): void {
     let queryUrl: string = `${this.apiUrl}/topArticles?number=${numberToLoad}`;
-    this.executeRequest(queryUrl)
+    this.executeGetRequest(queryUrl)
       .subscribe(
         (articles: Article[]) => {
           articles = this.convertPublishDatesFromAPI(articles);
@@ -54,7 +54,7 @@ export class ArticleService {
 
   public getArticleById(articleId: number, callback: any): void {
     let queryUrl: string = `${this.apiUrl}/article?id=${articleId}`;
-    this.executeRequest(queryUrl)
+    this.executeGetRequest(queryUrl)
       .subscribe(
         (article:Article) => {
           article = this.convertPublishDateFromAPI(article);
@@ -68,7 +68,7 @@ export class ArticleService {
 
   public getArticleByName(articleName: string, callback: any): void {
     let queryUrl: string = `${this.apiUrl}/article?name=${articleName}`;
-    this.executeRequest(queryUrl)
+    this.executeGetRequest(queryUrl)
       .subscribe(
         (article:Article) => {
           article = this.convertPublishDateFromAPI(article);
@@ -83,7 +83,7 @@ export class ArticleService {
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   public createArticle(article: Article, callback: any) {
     let queryUrl: string = `${this.apiUrl}/create?name=${article.name}&title=${article.title}&sub=${article.subTitle}&date=${article.publishDate}&content=${article.content}`;
-    this.executeRequest(queryUrl)
+    this.executePostRequest(queryUrl)
       .subscribe(
         (articleId: number) => {
           callback(articleId);
@@ -97,7 +97,7 @@ export class ArticleService {
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   public updateArticle(article: Article, callback: any) {
     let queryUrl: string = `${this.apiUrl}/update?id=${article.id}&name=${article.name}&title=${article.title}&sub=${article.subTitle}&date=${article.publishDate}&content=${article.content}`;
-    this.executeRequest(queryUrl)
+    this.executePostRequest(queryUrl)
       .subscribe(
         (articleId: number) => {
           callback(articleId);
@@ -111,7 +111,7 @@ export class ArticleService {
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   public deleteArticle(article: Article, callback: any) {
     let queryUrl: string = `${this.apiUrl}/delete?id=${article.id}`;
-    this.executeRequest(queryUrl)
+    this.executePostRequest(queryUrl)
       .subscribe(
         (success: number) => {
           callback(success);
@@ -122,10 +122,21 @@ export class ArticleService {
       );
   }
 
-  private executeRequest(queryUrl: string): Observable<any> {
+  private executeGetRequest(queryUrl: string): Observable<any> {
     return this.http
       .get(queryUrl)
       .map((response:Response) => <any>response.json());
+  }
+
+  private executePostRequest(queryUrl: string): Observable<any> {
+    // return this.http
+      // .put(queryUrl)
+      // .map((response:Response) => <any>response.json());
+
+      // return this.http.put
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.post(queryUrl, null, headers);
   }
 
   private onError(error: any) {
