@@ -29,10 +29,6 @@ export class CreateArticlePageComponent implements OnInit {
       this.route.params.subscribe(params => { this.article.publishDate = params['date']; });
       this.route.params.subscribe(params => { this.article.content = params['content']; });
 
-      //TODO: WILL NEED TO CONVERT THIS DATE TO PROPER FORMAT?
-      // this.article = this.articleService.convertPublishDate(this.article);
-      console.log(this.article);
-
       if(this.article.title) {
         this.titleInputChanged();
       }
@@ -56,23 +52,32 @@ export class CreateArticlePageComponent implements OnInit {
 
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   updateArticle() {
-    var self = this;
-    this.articleService.updateArticle(this.article, 
-      function(articleId: number): void {
-        self.onRequestSuccess(articleId);
-      });
+    this.articleService.updateArticle(this.article)
+      .subscribe(
+        (articleId: number) => {
+          this.onRequestSuccess(articleId);
+        },
+        error => {
+          this.onError(error);
+        }
+    );
   }
 
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   saveArticle() {
-    var self = this;
-    this.articleService.createArticle(this.article,
-      function(articleId: number): void {
-        self.onRequestSuccess(articleId);
-      })
+    this.articleService.createArticle(this.article)
+      .subscribe(
+        (articleId: number) => {
+          this.onRequestSuccess(articleId);
+        },
+        error => {
+          this.onError(error);
+        }
+    );
   }
 
   onRequestSuccess(articleId: number) {
+    console.log(articleId);
     if(articleId == -1) {
       this.onError("Error creating article");
     } else {

@@ -90,31 +90,46 @@ export class ArticlePageComponent implements OnInit {
   }
 
   loadArticleById(articleId: number) {
-    var self = this;
-    this.articleService.getArticleById(articleId,
-      function onArticle(article: Article): void {
-        self.onSuccess(article);
-      });
+    this.articleService.getArticleById(articleId)
+      .subscribe(
+        (article:Article) => {
+          article = this.articleService.convertPublishDateFromAPI(article);
+          this.onSuccess(article);
+        },
+        error => {
+          this.onError(error);
+        }
+    );
   }
 
   loadArticleByName(articleName: string) {
-    var self = this;
-    this.articleService.getArticleByName(articleName,
-      function onArticle(article: Article): void {
-        self.onSuccess(article);
-      });
+    this.articleService.getArticleByName(articleName)
+      .subscribe(
+        (article:Article) => {
+          article = this.articleService.convertPublishDateFromAPI(article);
+          this.onSuccess(article);
+        },
+        error => {
+          this.onError(error);
+        }
+    );
   }
 
   deleteArticle() {
-    var self = this;
-    this.articleService.deleteArticle(this.article,
-      function onDelete(success: number): void {
-        if(success >= 0) {
-            self.router.navigate(["allArticles"]);
+    this.articleService.deleteArticle(this.article)
+      .subscribe(
+        (success: number) => {
+          console.log(success);
+          if(success >= 0) {
+            this.router.navigate(["allArticles"]);
           } else {
-            self.onError("Error deleting article");
+            this.onError("Error deleting article");
           }
-      });
+        },
+        error => {
+          this.onError(error);
+        }
+    );
   }
 
   onSuccess(article: Article) {

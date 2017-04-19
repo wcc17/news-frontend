@@ -20,13 +20,21 @@ export class MainPageComponent implements OnInit {
     this.loading = true;
   }
 
+  ngOnInit() {
+    this.loadArticles();
+  }
+
   loadArticles() {
-    var self = this;
-    this.articleService.getTopArticles(NUM_ARTICLES_TO_LOAD,
-      function(articles: Article[]): void {
-        self.onSuccess(articles);
-      }
-    )
+    this.articleService.getTopArticles(NUM_ARTICLES_TO_LOAD)
+      .subscribe(
+        (articles: Article[]) => {
+          articles = this.articleService.convertPublishDatesFromAPI(articles);
+          this.onSuccess(articles);
+        },
+        error => {
+          this.onError(error);
+        }
+      );
   }
 
   onSuccess(articles: Article[]) {
@@ -43,9 +51,4 @@ export class MainPageComponent implements OnInit {
   getTopArticleImagePath() {
     return this.articleService.getArticleImagePath(this.topArticle);
   }
-
-  ngOnInit() {
-    this.loadArticles();
-  }
-
 }
