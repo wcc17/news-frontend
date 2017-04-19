@@ -41,28 +41,22 @@ export class AllArticlesPageComponent implements OnInit {
   }
 
   getArticlePage() {
-    this.articleService.loadPageOfArticles(this.currentPageNumber-1, PAGE_SIZE)
-      .subscribe(
-        (articles: Article[]) => {
-          this.loading = false;
-          this.articles = articles;
-        },
-        error => {
-          this.onError(error);
-        }
-      );
+    var self = this;
+    this.articleService.getPageOfArticles(this.currentPageNumber-1, PAGE_SIZE, (
+      function onSuccess(articles: Article[]): void {
+        self.loading = false;
+        self.articles = articles;
+      }
+    ));
   }
 
   getArticleCount() {
-    this.articleService.getArticleCount()
-      .subscribe(
-        (count: number) => {
-          this.articleCount = count;
-        },
-        error => {
-          this.onError(error);
-        }
-      );
+    var self = this;
+    this.articleService.getArticleCount(
+      function onSuccess(count: number): void {
+        self.articleCount = count;
+      }
+    );
   }
 
   onError(error: any) {

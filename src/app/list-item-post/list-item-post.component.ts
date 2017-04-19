@@ -17,4 +17,11 @@ export class ListItemPostComponent implements OnInit {
     this.post = new Post(this.article.title.toUpperCase(), this.article.subTitle.toUpperCase());
   }
 
+  getPublishDateString() {
+    if(this.article) {
+      // console.log(this.article);
+      return this.article.publishDate.toString();
+    }
+  }
+
 }

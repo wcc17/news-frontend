@@ -1,15 +1,21 @@
-<h1>
-    {{ article.title }}
-</h1>
-<h4>
-    {{ article.subTitle }}
-</h4>
+<div id="article-container">
+    <div id="article-title" class="row-3">
+        <h1>
+            {{ article.title }}
+        </h1>
+    </div>
 
-<br>
-IMAGE HERE
-<!--<img class="rounded img-fluid" [src]="post.imagePath"/>-->
-<br>
-<br>
+    <div id="article-sub-title" class="row-2">
+        <h4>
+            {{ article.subTitle }}
+        </h4>
+    </div>
 
-<div [innerHTML]="article.content">
-</div> 
+    <div id="article-image" class="row-3 text-center">
+        <img class="rounded img-fluid" [src]="articleService.getArticleImagePath(article)"/>
+    </div>
+
+    <div class="row-4">
+        <div [innerHTML]="article.content"></div> 
+    </div>
+</div>

@@ -21,16 +21,21 @@ export class CreateArticlePageComponent implements OnInit {
 
   loadParams(): void {
     this.article = new Article();
-    this.route.params.subscribe(params => { this.article.id = params['id']; });
-    this.route.params.subscribe(params => { this.article.title = params['title']; });
-    this.route.params.subscribe(params => { this.article.subTitle = params['subtitle']; });
-    this.route.params.subscribe(params => { this.article.publishDate = params['date']; });
-    this.route.params.subscribe(params => { this.article.content = params['content']; });
 
-    this.article.publishDate = this.articleService.convertPublishDate(this.article);
+    if(this.route.snapshot.url[1] != null) {
+      this.route.params.subscribe(params => { this.article.id = params['id']; });
+      this.route.params.subscribe(params => { this.article.title = params['title']; });
+      this.route.params.subscribe(params => { this.article.subTitle = params['subtitle']; });
+      this.route.params.subscribe(params => { this.article.publishDate = params['date']; });
+      this.route.params.subscribe(params => { this.article.content = params['content']; });
 
-    if(this.article.title) {
-      this.titleInputChanged();
+      //TODO: WILL NEED TO CONVERT THIS DATE TO PROPER FORMAT?
+      // this.article = this.articleService.convertPublishDate(this.article);
+      console.log(this.article);
+
+      if(this.article.title) {
+        this.titleInputChanged();
+      }
     }
   }
 
@@ -51,30 +56,20 @@ export class CreateArticlePageComponent implements OnInit {
 
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   updateArticle() {
-    console.log("CreateArticlePage - updateArticle called");
-    this.articleService.updateArticle(this.article)
-      .subscribe(
-        (articleId: number) => {
-          this.onRequestSuccess(articleId);
-        },
-        error => {
-          this.onError(error);
-        }
-      )
+    var self = this;
+    this.articleService.updateArticle(this.article, 
+      function(articleId: number): void {
+        self.onRequestSuccess(articleId);
+      });
   }
 
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   saveArticle() {
-    console.log("CreateArticlePage - saveArticle called");
-    this.articleService.createArticle(this.article)
-      .subscribe(
-        (articleId: number) => {
-          this.onRequestSuccess(articleId);
-        },
-        error => {
-          this.onError(error);
-        }
-      )
+    var self = this;
+    this.articleService.createArticle(this.article,
+      function(articleId: number): void {
+        self.onRequestSuccess(articleId);
+      })
   }
 
   onRequestSuccess(articleId: number) {

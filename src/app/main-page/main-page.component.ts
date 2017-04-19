@@ -3,7 +3,7 @@ import { ArticleService } from '../service/article.service';
 import { Article } from '../article/article.model';
 import { Router } from '@angular/router';
 
-const ARTICLES_TO_LOAD: number = 7;
+const NUM_ARTICLES_TO_LOAD: number = 7;
 
 @Component({
   selector: 'app-main-page',
@@ -21,23 +21,16 @@ export class MainPageComponent implements OnInit {
   }
 
   loadArticles() {
-    this.articleService.loadTopArticles(ARTICLES_TO_LOAD)
-      .subscribe(
-        (articles: Article[]) => {
-          this.onSuccess(articles);
-        },
-        error => {
-          this.onError(error);
-        }
-      );
+    var self = this;
+    this.articleService.getTopArticles(NUM_ARTICLES_TO_LOAD,
+      function(articles: Article[]): void {
+        self.onSuccess(articles);
+      }
+    )
   }
 
   onSuccess(articles: Article[]) {
-    for(let article of articles) {
-      article.publishDate = this.articleService.convertPublishDate(article);
-    }
     this.loading = false;
-
     this.articles = articles;
     this.topArticle = articles.shift();
   }

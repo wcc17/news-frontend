@@ -63,7 +63,7 @@ export class ArticlePageComponent implements OnInit {
     }
   }
 
-  //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
+  //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION and its ugly
   loadPreviewParam(route: any) {
       let articleTitle: string;
       let articleSubTitle: string;
@@ -90,48 +90,34 @@ export class ArticlePageComponent implements OnInit {
   }
 
   loadArticleById(articleId: number) {
-    this.articleService.loadArticleById(articleId)
-      .subscribe(
-        (article:Article) => {
-          this.onSuccess(article);
-        },
-        error => {
-          this.onError(error);
-        }
-      );
+    var self = this;
+    this.articleService.getArticleById(articleId,
+      function onArticle(article: Article): void {
+        self.onSuccess(article);
+      });
   }
 
   loadArticleByName(articleName: string) {
-    this.articleService.loadArticleByName(articleName)
-      .subscribe(
-        (article:Article) => {
-          this.onSuccess(article);
-        },
-        error => {
-          this.onError(error);
-        }
-      );
+    var self = this;
+    this.articleService.getArticleByName(articleName,
+      function onArticle(article: Article): void {
+        self.onSuccess(article);
+      });
   }
 
   deleteArticle() {
-    this.articleService.deleteArticle(this.article)
-      .subscribe(
-        (success: number) => {
-          if(success >= 0) {
-            this.router.navigate(["allArticles"]);
+    var self = this;
+    this.articleService.deleteArticle(this.article,
+      function onDelete(success: number): void {
+        if(success >= 0) {
+            self.router.navigate(["allArticles"]);
           } else {
-            this.onError("Error deleting article");
+            self.onError("Error deleting article");
           }
-        },
-        error => {
-          this.onError(error);
-        }
-      );
+      });
   }
 
   onSuccess(article: Article) {
-    article.publishDate = this.articleService.convertPublishDate(article);
-
     this.loading = false;
     this.article = article;
   }
@@ -139,16 +125,5 @@ export class ArticlePageComponent implements OnInit {
   onError(error: any) {
     console.log(error);
     this.router.navigate(["error"]);
-  }
-
-  getPublishDateString(): string {
-    if(this.article.publishDate != null) {
-      let year: number = this.article.publishDate.getFullYear();
-      let month: number = this.article.publishDate.getMonth();
-      let day: number = this.article.publishDate.getDate();
-
-      let dateString: string = year + "-" + month + "-" + day;
-      return dateString;
-    }
   }
 }
