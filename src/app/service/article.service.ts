@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http, Response } from '@angular/http';
+import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Article } from '../article/article.model';
@@ -48,20 +48,21 @@ export class ArticleService {
 
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   public createArticle(article: Article): Observable<number> {
-    let queryUrl: string = `${this.apiUrl}/create?name=${article.name}&title=${article.title}&sub=${article.subTitle}&date=${article.publishDate}&content=${article.content}`;
-    return this.executePostRequest(queryUrl);
+    // let queryUrl: string = `${this.apiUrl}/create?name=${article.name}&title=${article.title}&sub=${article.subTitle}&date=${article.publishDate}&content=${article.content}`;
+    let queryUrl: string = `${this.apiUrl}/create`;
+    return this.executePostRequest(queryUrl, article);
   }
 
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   public updateArticle(article: Article): Observable<number> {
     let queryUrl: string = `${this.apiUrl}/update?id=${article.id}&name=${article.name}&title=${article.title}&sub=${article.subTitle}&date=${article.publishDate}&content=${article.content}`;
-    return this.executePostRequest(queryUrl);
+    return this.executePostRequest(queryUrl, article);
   }
 
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   public deleteArticle(article: Article): Observable<number> {
     let queryUrl: string = `${this.apiUrl}/delete?id=${article.id}`;
-    return this.executePostRequest(queryUrl);
+    return this.executePostRequest(queryUrl, article);
   }
 
   private extractArticleData(response: Response): Article {
@@ -79,18 +80,11 @@ export class ArticleService {
     return articles;
   }
 
-  private executePostRequest(queryUrl: string): Observable<any> {
-    // return this.http
-      // .put(queryUrl)
-      // .map((response:Response) => <any>response.json());
-
-      // return this.http.put
-    // let headers = new Headers();
-    // headers.append('Content-Type', 'application/json');
-    // return this.http.post(queryUrl, null, headers);
-
+  private executePostRequest(queryUrl: string, article: Article): Observable<any> {
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
     return this.http
-      .get(queryUrl)
+      .post(queryUrl, article, options)
       .map(this.extractArticleData);
   }
 
