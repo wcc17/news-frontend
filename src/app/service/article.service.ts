@@ -6,8 +6,8 @@ import { Article } from '../article/article.model';
 
 @Injectable()
 export class ArticleService {
-  apiUrl: string = "http://localhost:8080/article";
-  // apiUrl: string = "http://104.236.209.190:8080/article";
+  // apiUrl: string = "http://localhost:8080/article";
+  apiUrl: string = "http://104.236.209.190:8080/article";
 
   constructor(public http: Http, private router: Router) { }
 
@@ -15,54 +15,69 @@ export class ArticleService {
     let queryUrl: string = `${this.apiUrl}?page=${pageNumber}&size=${pageSize}`;
     return this.http
       .get(queryUrl)
-      .map(this.extractArticlesData);
+      .map(this.extractArticlesData)
+      .catch(this.handleError);
   }
 
   public getArticleCount(): Observable<number> {
     let queryUrl: string = `${this.apiUrl}/count`;
     return this.http
       .get(queryUrl)
-      .map((response:Response) => <number>response.json());
+      .map((response:Response) => <number>response.json())
+      .catch(this.handleError);
   }
 
   public getTopArticles(numberToLoad: number): Observable<Article[]> {
     let queryUrl: string = `${this.apiUrl}/top?number=${numberToLoad}`;
     return this.http
       .get(queryUrl)
-      .map(this.extractArticlesData);
+      .map(this.extractArticlesData)
+      .catch(this.handleError);
   }
 
   public getArticleById(articleId: number): Observable<Article> {
     let queryUrl: string = `${this.apiUrl}?id=${articleId}`;
     return this.http
       .get(queryUrl)
-      .map(this.extractArticleData);
+      .map(this.extractArticleData)
+      .catch(this.handleError);
   }
 
   public getArticleByName(articleName: string): Observable<Article> {
     let queryUrl: string = `${this.apiUrl}?name=${articleName}`;
     return this.http
       .get(queryUrl)
-      .map(this.extractArticleData);
+      .map(this.extractArticleData)
+      .catch(this.handleError);
   }
 
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
-  public createArticle(article: Article): Observable<number> {
-    // let queryUrl: string = `${this.apiUrl}/create?name=${article.name}&title=${article.title}&sub=${article.subTitle}&date=${article.publishDate}&content=${article.content}`;
+  public createArticle(article: Article): Observable<string> {
     let queryUrl: string = `${this.apiUrl}/create`;
-    return this.executePostRequest(queryUrl, article);
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http
+      .post(queryUrl, article, options)
+      .map((response:Response) => <any>response.headers.get('location'))
+      .catch(this.handleError);
   }
 
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
-  public updateArticle(article: Article): Observable<number> {
-    let queryUrl: string = `${this.apiUrl}/update?id=${article.id}&name=${article.name}&title=${article.title}&sub=${article.subTitle}&date=${article.publishDate}&content=${article.content}`;
-    return this.executePostRequest(queryUrl, article);
+  public updateArticle(article: Article): Observable<void> {
+    let queryUrl: string = `${this.apiUrl}/update`;
+    let headers = new Headers({ 'Content-Type': 'application/json' });
+    let options = new RequestOptions({ headers: headers });
+    return this.http
+      .put(queryUrl, article, options)
+      .catch(this.handleError);
   }
 
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
-  public deleteArticle(article: Article): Observable<number> {
+  public deleteArticle(article: Article): Observable<void> {
     let queryUrl: string = `${this.apiUrl}/delete?id=${article.id}`;
-    return this.executePostRequest(queryUrl, article);
+    return this.http
+      .delete(queryUrl)
+      .catch(this.handleError);
   }
 
   private extractArticleData(response: Response): Article {
@@ -80,17 +95,17 @@ export class ArticleService {
     return articles;
   }
 
-  private executePostRequest(queryUrl: string, article: Article): Observable<any> {
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.http
-      .post(queryUrl, article, options)
-      .map(this.extractArticleData);
+ //TODO: come back to this
+  private handleError (error: Response | any) {
+    let errMsg: string;
+    if (error instanceof Response) {
+      const body = error.json() || '';
+      const err = body.error || JSON.stringify(body);
+      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
+    } else {
+      errMsg = error.message ? error.message : error.toString();
+    }
+    console.error(errMsg);
+    return Observable.throw(errMsg);
   }
-
-  //TODO: eventually want to use this and add .catch(...) to execute*Request
-  // private onError(error: any) {
-  //   console.log(error);
-  //   this.router.navigate(["error"]);
-  // }
 }

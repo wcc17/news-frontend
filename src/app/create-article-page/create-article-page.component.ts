@@ -54,8 +54,8 @@ export class CreateArticlePageComponent implements OnInit {
   updateArticle() {
     this.articleService.updateArticle(this.article)
       .subscribe(
-        (articleId: number) => {
-          this.onRequestSuccess(articleId);
+        () => {
+          this.onRequestSuccess(this.article.id.toString());
         },
         error => {
           this.onError(error);
@@ -67,7 +67,7 @@ export class CreateArticlePageComponent implements OnInit {
   saveArticle() {
     this.articleService.createArticle(this.article)
       .subscribe(
-        (articleId: number) => {
+        (articleId: string) => {
           this.onRequestSuccess(articleId);
         },
         error => {
@@ -76,12 +76,11 @@ export class CreateArticlePageComponent implements OnInit {
     );
   }
 
-  onRequestSuccess(articleId: number) {
-    console.log(articleId);
-    if(articleId == -1) {
-      this.onError("Error creating article");
-    } else {
+  onRequestSuccess(articleId: string) {
+    if(articleId) {
       this.router.navigate(['/article', 'id', articleId]);
+    } else {
+      this.onError("Error creating article");
     }
   }
 

@@ -109,13 +109,8 @@ export class ArticlePageComponent implements OnInit {
   deleteArticle() {
     this.articleService.deleteArticle(this.article)
       .subscribe(
-        (success: number) => {
-          console.log(success);
-          if(success >= 0) {
-            this.router.navigate(["allArticles"]);
-          } else {
-            this.onError("Error deleting article");
-          }
+        () => {
+          this.router.navigate(["allArticles"]);
         },
         error => {
           this.onError(error);
