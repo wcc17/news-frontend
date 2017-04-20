@@ -28,7 +28,6 @@ export class MainPageComponent implements OnInit {
     this.articleService.getTopArticles(NUM_ARTICLES_TO_LOAD)
       .subscribe(
         (articles: Article[]) => {
-          articles = this.articleService.convertPublishDatesFromAPI(articles);
           this.onSuccess(articles);
         },
         error => {

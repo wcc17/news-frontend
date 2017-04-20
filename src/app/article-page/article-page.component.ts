@@ -93,7 +93,6 @@ export class ArticlePageComponent implements OnInit {
     this.articleService.getArticleById(articleId)
       .subscribe(
         (article:Article) => {
-          article = this.articleService.convertPublishDateFromAPI(article);
           this.onSuccess(article);
         },
         error => {
@@ -106,7 +105,6 @@ export class ArticlePageComponent implements OnInit {
     this.articleService.getArticleByName(articleName)
       .subscribe(
         (article:Article) => {
-          article = this.articleService.convertPublishDateFromAPI(article);
           this.onSuccess(article);
         },
         error => {

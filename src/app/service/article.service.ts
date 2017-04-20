@@ -13,27 +13,37 @@ export class ArticleService {
 
   public getPageOfArticles(pageNumber: number, pageSize: number): Observable<Article[]> {
     let queryUrl: string = `${this.apiUrl}?page=${pageNumber}&size=${pageSize}`;
-    return this.executeGetRequest(queryUrl);
+    return this.http
+      .get(queryUrl)
+      .map(this.extractArticlesData);
   }
 
   public getArticleCount(): Observable<number> {
     let queryUrl: string = `${this.apiUrl}/count`;
-    return this.executeGetRequest(queryUrl);
+    return this.http
+      .get(queryUrl)
+      .map((response:Response) => <number>response.json());
   }
 
   public getTopArticles(numberToLoad: number): Observable<Article[]> {
     let queryUrl: string = `${this.apiUrl}/top?number=${numberToLoad}`;
-    return this.executeGetRequest(queryUrl);
+    return this.http
+      .get(queryUrl)
+      .map(this.extractArticlesData);
   }
 
   public getArticleById(articleId: number): Observable<Article> {
     let queryUrl: string = `${this.apiUrl}?id=${articleId}`;
-    return this.executeGetRequest(queryUrl);
+    return this.http
+      .get(queryUrl)
+      .map(this.extractArticleData);
   }
 
   public getArticleByName(articleName: string): Observable<Article> {
     let queryUrl: string = `${this.apiUrl}?name=${articleName}`;
-    return this.executeGetRequest(queryUrl);
+    return this.http
+      .get(queryUrl)
+      .map(this.extractArticleData);
   }
 
   //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
@@ -54,10 +64,19 @@ export class ArticleService {
     return this.executePostRequest(queryUrl);
   }
 
-  private executeGetRequest(queryUrl: string): Observable<any> {
-    return this.http
-      .get(queryUrl)
-      .map((response:Response) => <any>response.json());
+  private extractArticleData(response: Response): Article {
+    let article: Article = new Article(response.json());
+    return article;
+  }
+
+  private extractArticlesData(response: Response): Article[] {
+    let articles: Article[] = new Array<Article>();  
+    let body: any = response.json();
+    for(let i in body) {
+      articles.push(new Article(body[i]));
+    }
+
+    return articles;
   }
 
   private executePostRequest(queryUrl: string): Observable<any> {
@@ -70,39 +89,19 @@ export class ArticleService {
     // headers.append('Content-Type', 'application/json');
     // return this.http.post(queryUrl, null, headers);
 
-    return this.executeGetRequest(queryUrl);
-  }
-
-  private onError(error: any) {
-    console.log(error);
-    this.router.navigate(["error"]);
+    return this.http
+      .get(queryUrl)
+      .map(this.extractArticleData);
   }
 
 
-  //TODO: the next 3 methods might need to be in a different "ArticleService". The above methods make http requests, these just do semi-complex manipulation of article stuff. ArticleRequestService and ArticleService
-  //TODO: this should not take/return an entire article
-  public convertPublishDateFromAPI(article: Article): Article {
-    if(article.publishDate) {
-      let publishDate: any = article.publishDate;
+  //TODO: eventually want to use this and add .catch(...) to execute*Request
+  // private onError(error: any) {
+  //   console.log(error);
+  //   this.router.navigate(["error"]);
+  // }
 
-      let year: number = publishDate.year;
-      let month: number = publishDate.monthValue - 1; //javascript takes a 0 indexed month number
-      let day: number = publishDate.dayOfMonth;
-
-      //new Date(year, month, day, hours, minutes, seconds, milliseconds)
-      article.publishDate = new Date(year, month, day, 0, 0, 0, 0);
-      return article;
-    }
-  }
-
-  public convertPublishDatesFromAPI(articles: Article[]): Article[] {
-    for(let article of articles) {
-      article = this.convertPublishDateFromAPI(article);
-    }
-
-    return articles;
-  }
-
+  //TODO: the next methods might need to be in a different "ArticleService". The above methods make http requests, these just do semi-complex manipulation of article stuff. ArticleRequestService and ArticleService
   //DO NOT use padded numbers (01, 02 instead of 1, 2) in image path on filesystem
   public getArticleImagePath(article: Article): string {
     if(article) {

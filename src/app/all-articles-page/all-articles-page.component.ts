@@ -23,10 +23,6 @@ export class AllArticlesPageComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initialize();
-  }
-
-  initialize() {
     this.getArticleCount();
     this.getArticlePage();
   }
@@ -37,15 +33,14 @@ export class AllArticlesPageComponent implements OnInit {
     this.currentPageNumber = event.page;
     this.articles = [];
 
-    this.initialize();
+    this.getArticleCount();
+    this.getArticlePage();
   }
 
   getArticlePage() {
     this.articleService.getPageOfArticles(this.currentPageNumber-1, PAGE_SIZE)
       .subscribe(
         (articles: Article[]) => {
-          articles = this.articleService.convertPublishDatesFromAPI(articles);
-          console.log(articles);
           this.articles = articles;
           this.loading = false;
         },
