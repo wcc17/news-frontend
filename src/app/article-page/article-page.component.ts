@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../service/article.service';
+import { StringUtilService } from '../service/string-util.service';
 import { Article } from '../article/article.model';
 
 const URL_ID_INDEX: number = 1;
@@ -19,7 +20,8 @@ export class ArticlePageComponent implements OnInit {
   preview: boolean = false; //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
   article: Article;
 
-  constructor(@Inject(ArticleService) private articleService: ArticleService, 
+  constructor(@Inject(ArticleService) private articleService: ArticleService,
+              @Inject(StringUtilService) private stringUtilService: StringUtilService, 
               private route: ActivatedRoute,
               private router: Router) {
     this.loading = true;
@@ -65,22 +67,13 @@ export class ArticlePageComponent implements OnInit {
 
   //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION and its ugly
   loadPreviewParam(route: any) {
-      let articleTitle: string;
-      let articleSubTitle: string;
-      let articleDate: Date;
-      let articleContent: string;
-      route.params.subscribe(params => { articleTitle = params['title']; });
-      route.params.subscribe(params => { articleSubTitle = params['subtitle']; });
-      route.params.subscribe(params => { articleDate = params['date']; });
-      route.params.subscribe(params => { articleContent = params['content']; });
-
-      this.article.title = articleTitle;
-      this.article.subTitle = articleSubTitle;
-      this.article.publishDate = articleDate;
-      this.article.content = articleContent;
-
       this.loading = false;
       this.preview = true;
+
+      route.params.subscribe(params => { this.article.title = params['title']; });
+      route.params.subscribe(params => { this.article.subTitle = params['subtitle']; });
+      route.params.subscribe(params => { this.article.publishDate = params['date']; });
+      route.params.subscribe(params => { this.article.content = params['content']; });
 
       //if anything goes wrong loading create params
       if(!this.article.title || !this.article.subTitle || !this.article.publishDate || !this.article.content) {

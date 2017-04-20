@@ -29,4 +29,16 @@ export class Article {
 
         return publishDate;
     } 
+
+    public getArticleImagePath(): string {
+        if(this.publishDate && this.name) {
+            let year: string = this.publishDate.getFullYear().toString();
+            let month: string = (this.publishDate.getMonth()+1).toString(); //javascript month is 0 indexed
+            let day: string = this.publishDate.getDate().toString();
+            
+            //TODO: NOT ALL IMAGES WILL BE JPEGS! WHAT DO. can i check for local file existence?
+            let path: string = 'assets/images/article/' + year + '/' + month + '-' + day + '/' + this.name + '.jpg';
+            return path;
+        }
+    }
 }

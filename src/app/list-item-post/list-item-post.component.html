@@ -1,13 +1,13 @@
 <div class="col">
     <div id="title" class="row-2, text-left">
         <a [routerLink]="['/article/id', article.id]">
-            {{ post.title }}
+            {{ article.title.toUpperCase() }}
         </a>
     </div>
 
     <div class="row-2">
         <p id="description" class="text-left">
-            {{ getPublishDateString() }} - {{ post.description }}
+            {{ stringUtilService.getStringFromJSDate(article.publishDate, true) }} - {{ article.subTitle.toUpperCase() }}
         </p>
     </div>
 </div>

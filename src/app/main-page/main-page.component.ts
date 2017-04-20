@@ -46,8 +46,4 @@ export class MainPageComponent implements OnInit {
     console.log(error);
     this.router.navigate(["error"]);
   }
-
-  getTopArticleImagePath() {
-    return this.articleService.getArticleImagePath(this.topArticle);
-  }
 }

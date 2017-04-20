@@ -1,6 +1,6 @@
 <div id="article-container"> 
    <div *ngIf="loading">Loading your article...</div>
-   <app-article *ngIf="loading == false" [article]="this.article"></app-article>
+   <app-article *ngIf="!loading" [article]="this.article"></app-article>
    
    <!-- TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION -->
    <button type="button" 
@@ -13,7 +13,7 @@
     <button type="button" 
            class="btn btn-primary"
            *ngIf="preview == false"
-           [routerLink]="['/create/edit', article.id, article.title, article.subTitle, articleService.getStringFromJSDate(this.article), article.content]">Edit</button>
+           [routerLink]="['/create/edit', article.id, article.title, article.subTitle, stringUtilService.getStringFromJSDate(this.article.publishDate), article.content]">Edit</button>
 
    <!-- TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION -->
    <!-- this needs to check if production is active or just needs to be commented out for the copy on digitalOcean -->

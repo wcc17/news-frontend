@@ -6,7 +6,7 @@
       <app-post
         *ngIf="loading == false"
           [article]="topArticle"
-          [imagePath]="articleService.getArticleImagePath(topArticle)">
+          [imagePath]="topArticle.getArticleImagePath()">
       </app-post>
     </div>
 

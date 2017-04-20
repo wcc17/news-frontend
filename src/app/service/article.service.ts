@@ -94,49 +94,9 @@ export class ArticleService {
       .map(this.extractArticleData);
   }
 
-
   //TODO: eventually want to use this and add .catch(...) to execute*Request
   // private onError(error: any) {
   //   console.log(error);
   //   this.router.navigate(["error"]);
   // }
-
-  //TODO: the next methods might need to be in a different "ArticleService". The above methods make http requests, these just do semi-complex manipulation of article stuff. ArticleRequestService and ArticleService
-  //DO NOT use padded numbers (01, 02 instead of 1, 2) in image path on filesystem
-  public getArticleImagePath(article: Article): string {
-    if(article) {
-      if(article.publishDate && article.name) {
-          let year: string = article.publishDate.getFullYear().toString();
-          let month: string = (article.publishDate.getMonth()+1).toString(); //javascript month is 0 indexed
-          let day: string = article.publishDate.getDate().toString();
-          
-          //TODO: NOT ALL IMAGES WILL BE JPEGS! WHAT DO. can i check for local file existence?
-          let path: string = 'assets/images/article/' + year + '/' + month + '-' + day + '/' + article.name + '.jpg';
-          return path;
-      }
-    }
-
-    //TODO: where to handle this situation? or should I handle at all
-    return '';
-  }
-
-  //TODO: this should not take a whole article as the argument
-  public getStringFromJSDate(article: Article): string {
-    if(article.publishDate != null) {
-      let year: number = article.publishDate.getFullYear();
-      let month: number = article.publishDate.getMonth()+1; //javascript month is 0 indexed (WHY)
-      let day: number = article.publishDate.getDate();
-
-      let dateString: string = year + "-" + this.padNumber(month) + "-" + this.padNumber(day);
-      return dateString;
-    }
-  }
-
-  //TODO: i don't like this here
-  public padNumber(num: number): string {
-    if(num < 10) {
-      return ("0" + num);
-    }
-    return num.toString();
-  }
 }
