@@ -1,5 +1,9 @@
 #article-container {
-    margin-right: 15px;
+    margin-right: 35px;
+}
+
+#article-title {
+    margin-bottom: 10px;
 }
 
 #article-sub-title {
@@ -7,5 +11,12 @@
 }
 
 #article-image {
-    margin-bottom: 15px;
+    margin-bottom: 25px;
+}
+#article-date {
+    /*margin-bottom: 15px;*/
+}
+
+#share-button-container {
+    margin-bottom: 10px;
 }

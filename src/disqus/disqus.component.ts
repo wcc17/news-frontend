@@ -6,7 +6,7 @@ import { Component, Input, ElementRef, OnInit, Renderer } from '@angular/core';
     styleUrls: ['./disqus.component.css']
 })
 export class DisqusComponent implements OnInit {
-    public shortname: string = 'deplorablenews';
+    public shortname: string = 'deplorablenews'; //lol. change to whatever disqus shortname, set this one up as a test account
     @Input() identifier: number;
 
     constructor(private el:ElementRef, private renderer:Renderer) { }
@@ -54,7 +54,6 @@ export class DisqusComponent implements OnInit {
       return function () {
         this.page.url = window.location.href;
         this.page.identifier = _self.identifier.toString();
-        console.log("using identifier " + this.page.identifier);
         this.language = 'en';
       };
     }

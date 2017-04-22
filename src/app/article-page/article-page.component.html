@@ -1,26 +1,37 @@
 <div id="article-container"> 
-   <div *ngIf="loading">Loading your article...</div>
-   <app-article *ngIf="!loading" [article]="article"></app-article>
+   <div class="row-6">
+      <div *ngIf="loading">Loading your article...</div>
+      <app-article *ngIf="!loading" [article]="article" [url]="this.router.url"></app-article>
+   </div>
    
    <!-- TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION -->
-   <button type="button" 
+   <!--<button type="button" 
            class="btn btn-primary" 
            *ngIf="preview" 
-           [routerLink]="['/create/prog', article.title, article.subTitle, article.publishDate, article.content]">Back</button>
+           [routerLink]="['/create/prog', article.title, article.subTitle, article.publishDate, article.content]">Back</button>-->
 
    <!-- TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION -->
    <!-- this needs to check if production is active or just needs to be commented out for the copy on digitalOcean -->
-    <button type="button" 
+    <!--<button type="button" 
            class="btn btn-primary"
            *ngIf="preview == false"
-           [routerLink]="['/create/edit', article.id, article.title, article.subTitle, article.publishDate | date:'yyyy-MM-dd', article.content]">Edit</button>
+           [routerLink]="['/create/edit', article.id, article.title, article.subTitle, article.publishDate | date:'yyyy-MM-dd', article.content]">Edit</button>-->
 
    <!-- TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION -->
    <!-- this needs to check if production is active or just needs to be commented out for the copy on digitalOcean -->
-    <button type="button" 
+    <!--<button type="button" 
            class="btn btn-primary"
            *ngIf="preview == false"
-           (click)="deleteArticle()">Delete</button>
+           (click)="deleteArticle()">Delete</button>-->
+           
+   <div class="row-3 card">
+    MORE ADS HERE THO<br>
+    MORE ADS HERE THO<br>
+    MORE ADS HERE THO<br>
+    MORE ADS HERE THO<br>
+   </div>
 
-    <app-disqus *ngIf="!loading" [identifier]="article.id"></app-disqus>
+   <div class="row-3">
+      <app-disqus *ngIf="!loading" [identifier]="article.id"></app-disqus>
+   </div>
 </div>
