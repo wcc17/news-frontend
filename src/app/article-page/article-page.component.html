@@ -1,6 +1,6 @@
 <div id="article-container"> 
    <div *ngIf="loading">Loading your article...</div>
-   <app-article *ngIf="!loading" [article]="this.article"></app-article>
+   <app-article *ngIf="!loading" [article]="article"></app-article>
    
    <!-- TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION -->
    <button type="button" 
@@ -21,4 +21,6 @@
            class="btn btn-primary"
            *ngIf="preview == false"
            (click)="deleteArticle()">Delete</button>
+
+    <app-disqus *ngIf="!loading" [identifier]="article.id"></app-disqus>
 </div>
