@@ -6,6 +6,7 @@ import { AlertModule } from 'ng2-bootstrap';
 import { CollapseModule } from 'ng2-bootstrap';
 import { PaginationModule } from 'ng2-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
+import { DisqusModule } from '../disqus/disqus.module';
 
 import { AppComponent } from './app.component';
 import { PostComponent } from './post/post.component';
@@ -21,7 +22,7 @@ import { AllArticlesPageComponent } from './all-articles-page/all-articles-page.
 import { ListItemPostComponent } from './list-item-post/list-item-post.component';
 import { CreateArticlePageComponent } from './create-article-page/create-article-page.component';
 
-//any way to declare this in PageComponent instead?
+//TODO: any way to declare this in PageComponent instead?
 const childRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: MainPageComponent },
@@ -61,7 +62,8 @@ const routes: Routes = [
     CollapseModule.forRoot(),
     PaginationModule.forRoot(),
     
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes),
+    DisqusModule
   ],
   providers: [ArticleService, StringUtilService],
   bootstrap: [AppComponent]

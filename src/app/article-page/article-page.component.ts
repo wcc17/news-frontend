@@ -119,8 +119,8 @@ export class ArticlePageComponent implements OnInit {
   }
 
   onSuccess(article: Article) {
-    this.loading = false;
     this.article = article;
+    this.loading = false;
   }
 
   onError(error: any) {
