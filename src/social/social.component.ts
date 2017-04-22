@@ -20,7 +20,6 @@ export class SocialComponent implements OnInit {
   }
 
   ngOnChanges() {
-    console.log(this.url);
     //need to wait on parent components to get article loaded
     this.buildFacebookUrl();
     this.buildTwitterUrl();

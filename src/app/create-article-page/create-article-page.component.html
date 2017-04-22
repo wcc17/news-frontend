@@ -1,7 +1,8 @@
 <div class="container">
-  <div class="article-input row" (input)="titleInputChanged(this.article.title)">
+  <div class="article-input row">
     <h5>Title:</h5>
-    <input type="text" class="form-control" [(ngModel)]="this.article.title" required/>
+    <input type="text" *ngIf="!edit" class="form-control" (input)="titleInputChanged(this.article.title)" [(ngModel)]="this.article.title" required/>
+    <input type="text" *ngIf="edit" class="form-control" [(ngModel)]="this.article.title" required/>
   </div>
 
   <div class="article-input row">
@@ -16,7 +17,8 @@
 
   <div class="article-input row">
     <h5>Date:</h5>
-    <input type="date" class="form-control" [(ngModel)]="this.article.publishDate" required/>
+    <input type="date" *ngIf="edit" class="form-control" [(ngModel)]="this.article.publishDate" disabled=true/>
+    <input type="date" *ngIf="!edit" class="form-control" [(ngModel)]="this.article.publishDate" required/>
   </div>
 
   <div class="article-input row">
@@ -25,7 +27,7 @@
   </div>
 
   <div class="article-input row">
-    <button type="button" class="btn btn-primary" [routerLink]="['/article/preview', article.title, article.subTitle, article.publishDate, article.content]">Preview</button>
+    <button type="button" class="btn btn-primary" [routerLink]="['/article/preview', article.title, article.name, article.subTitle, article.publishDate, article.content]">Preview</button>
   </div>
 
   <div class="article-input row">
