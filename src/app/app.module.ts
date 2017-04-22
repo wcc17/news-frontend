@@ -7,6 +7,7 @@ import { CollapseModule } from 'ng2-bootstrap';
 import { PaginationModule } from 'ng2-bootstrap';
 import { RouterModule, Routes } from '@angular/router';
 import { DisqusModule } from '../disqus/disqus.module';
+import { SocialModule } from '../social/social.module';
 
 import { AppComponent } from './app.component';
 import { PostComponent } from './post/post.component';
@@ -62,7 +63,8 @@ const routes: Routes = [
     PaginationModule.forRoot(),
     
     RouterModule.forRoot(routes),
-    DisqusModule
+    DisqusModule,
+    SocialModule
   ],
   providers: [ArticleService],
   bootstrap: [AppComponent]

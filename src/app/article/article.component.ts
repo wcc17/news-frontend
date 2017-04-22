@@ -9,6 +9,7 @@ import { ArticleService } from '../service/article.service';
 })
 export class ArticleComponent implements OnInit {
   @Input() article: Article;
+  @Input() url: string;
 
   constructor(@Inject(ArticleService) private articleService: ArticleService) { }
 
