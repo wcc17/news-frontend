@@ -63,18 +63,19 @@ export class ArticlePageComponent implements OnInit {
     }
   }
 
-  //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION and its ugly
+  //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
   loadPreviewParam(route: any) {
       this.loading = false;
       this.preview = true;
 
       route.params.subscribe(params => { this.article.title = params['title']; });
+      route.params.subscribe(params => { this.article.name = params['name']; });
       route.params.subscribe(params => { this.article.subTitle = params['subtitle']; });
       route.params.subscribe(params => { this.article.publishDate = params['date']; });
       route.params.subscribe(params => { this.article.content = params['content']; });
 
       //if anything goes wrong loading create params
-      if(!this.article.title || !this.article.subTitle || !this.article.publishDate || !this.article.content) {
+      if(!this.article.title || !this.article.name || !this.article.subTitle || !this.article.publishDate || !this.article.content) {
         this.article = new Article();
         this.onError('Error during routing');
       }

@@ -28,11 +28,11 @@ const childRoutes: Routes = [
   { path: 'home', component: MainPageComponent },
   { path: 'article/name/:articleName', component: ArticlePageComponent },
   { path: 'article/id/:articleId', component: ArticlePageComponent },
-  { path: 'article/preview/:title/:subtitle/:date/:content', component: ArticlePageComponent }, //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
+  { path: 'article/preview/:title/:name/:subtitle/:date/:content', component: ArticlePageComponent }, //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
   { path: 'allArticles', component: AllArticlesPageComponent },
   { path: 'create', component: CreateArticlePageComponent }, //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
-  { path: 'create/edit/:id/:title/:subtitle/:date/:content', component: CreateArticlePageComponent },
-  { path: 'create/prog/:title/:subtitle/:date/:content', component: CreateArticlePageComponent },
+  { path: 'create/edit/:id/:title/:name/:subtitle/:date/:content', component: CreateArticlePageComponent },
+  { path: 'create/prog/:title/:name/:subtitle/:date/:content', component: CreateArticlePageComponent },
 ]
 
 const routes: Routes = [

@@ -10,6 +10,7 @@ import { Article } from '../article/article.model';
 })
 export class CreateArticlePageComponent implements OnInit {
   article: Article;  
+  edit: boolean;
 
   constructor(@Inject(ArticleService) private articleService: ArticleService,
               private route: ActivatedRoute,
@@ -22,16 +23,15 @@ export class CreateArticlePageComponent implements OnInit {
   loadParams(): void {
     this.article = new Article();
 
+    this.edit = false;
     if(this.route.snapshot.url[1] != null) {
+      this.edit = true;
       this.route.params.subscribe(params => { this.article.id = params['id']; });
       this.route.params.subscribe(params => { this.article.title = params['title']; });
+      this.route.params.subscribe(params => { this.article.name = params['name']; });
       this.route.params.subscribe(params => { this.article.subTitle = params['subtitle']; });
       this.route.params.subscribe(params => { this.article.publishDate = params['date']; });
       this.route.params.subscribe(params => { this.article.content = params['content']; });
-
-      if(this.article.title) {
-        this.titleInputChanged();
-      }
     }
   }
 
