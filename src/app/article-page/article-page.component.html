@@ -13,7 +13,7 @@
     <button type="button" 
            class="btn btn-primary"
            *ngIf="preview == false"
-           [routerLink]="['/create/edit', article.id, article.title, article.subTitle, stringUtilService.getStringFromJSDate(this.article.publishDate), article.content]">Edit</button>
+           [routerLink]="['/create/edit', article.id, article.title, article.subTitle, article.publishDate | date:'yyyy-MM-dd', article.content]">Edit</button>
 
    <!-- TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION -->
    <!-- this needs to check if production is active or just needs to be commented out for the copy on digitalOcean -->

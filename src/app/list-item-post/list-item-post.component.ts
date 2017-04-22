@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { Article } from '../article/article.model';
-import { StringUtilService } from '../service/string-util.service';
 
 @Component({
   selector: 'app-list-item-post',
@@ -10,7 +9,7 @@ import { StringUtilService } from '../service/string-util.service';
 export class ListItemPostComponent implements OnInit {
   @Input() article: Article;
 
-  constructor(@Inject(StringUtilService) private stringUtilService: StringUtilService) { }
+  constructor() { }
 
   ngOnInit() {
   }

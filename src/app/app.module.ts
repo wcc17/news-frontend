@@ -15,7 +15,6 @@ import { SmallPostComponent } from './small-post/small-post.component';
 import { ArticlePageComponent } from './article-page/article-page.component';
 import { ArticleComponent } from './article/article.component';
 import { ArticleService } from './service/article.service';
-import { StringUtilService } from './service/string-util.service';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { PageComponent } from './page/page.component';
 import { AllArticlesPageComponent } from './all-articles-page/all-articles-page.component';
@@ -65,7 +64,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     DisqusModule
   ],
-  providers: [ArticleService, StringUtilService],
+  providers: [ArticleService],
   bootstrap: [AppComponent]
 })
 
