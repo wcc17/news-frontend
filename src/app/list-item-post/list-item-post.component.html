@@ -7,7 +7,7 @@
 
     <div class="row-2">
         <p id="description" class="text-left">
-            {{ stringUtilService.getStringFromJSDate(article.publishDate, true) }} - {{ article.subTitle.toUpperCase() }}
+            {{ article.publishDate | date: 'fullDate' | uppercase }} - {{ article.subTitle.toUpperCase() }}
         </p>
     </div>
 </div>

@@ -1,7 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../service/article.service';
-import { StringUtilService } from '../service/string-util.service';
 import { Article } from '../article/article.model';
 
 const URL_ID_INDEX: number = 1;
@@ -21,7 +20,6 @@ export class ArticlePageComponent implements OnInit {
   article: Article;
 
   constructor(@Inject(ArticleService) private articleService: ArticleService,
-              @Inject(StringUtilService) private stringUtilService: StringUtilService, 
               private route: ActivatedRoute,
               private router: Router) {
     this.loading = true;
