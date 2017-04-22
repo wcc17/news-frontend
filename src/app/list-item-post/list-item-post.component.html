@@ -6,9 +6,12 @@
     </div>
 
     <div class="row-2">
-        <p id="description" class="text-left">
-            {{ article.publishDate | date: 'fullDate' | uppercase }} - {{ article.subTitle.toUpperCase() }}
-        </p>
+        <div class="text row-1">
+            {{ article.publishDate | date: 'fullDate' | uppercase }}
+        </div>
+        <div class="text row-1">
+            {{ article.subTitle.toUpperCase() }}
+        </div>
     </div>
 </div>
 <hr />
