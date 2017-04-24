@@ -4,24 +4,19 @@
       <app-article *ngIf="!loading" [article]="article" [url]="this.router.url"></app-article>
    </div>
    
-   <!-- TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION -->
    <button type="button" 
            class="btn btn-primary" 
-           *ngIf="preview" 
+           *ngIf="preview && _isDevMode()" 
            [routerLink]="['/create/prog', article.title, article.name, article.subTitle, article.publishDate, article.content]">Back</button>
 
-   <!-- TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION -->
-   <!-- this needs to check if production is active or just needs to be commented out for the copy on digitalOcean -->
     <button type="button" 
            class="btn btn-primary"
-           *ngIf="preview == false"
+           *ngIf="!preview && _isDevMode()"
            [routerLink]="['/create/edit', article.id, article.title, article.name, article.subTitle, article.publishDate | date:'yyyy-MM-dd', article.content]">Edit</button>
 
-   <!-- TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION -->
-   <!-- this needs to check if production is active or just needs to be commented out for the copy on digitalOcean -->
     <button type="button" 
            class="btn btn-primary"
-           *ngIf="preview == false"
+           *ngIf="!preview && _isDevMode()"
            (click)="deleteArticle()">Delete</button>
            
    <div class="row-3 card">

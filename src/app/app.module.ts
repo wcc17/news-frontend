@@ -15,28 +15,33 @@ import { MainPageComponent } from './main-page/main-page.component';
 import { SmallPostComponent } from './small-post/small-post.component';
 import { ArticlePageComponent } from './article-page/article-page.component';
 import { ArticleComponent } from './article/article.component';
-import { ArticleService } from './service/article.service';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { PageComponent } from './page/page.component';
 import { AllArticlesPageComponent } from './all-articles-page/all-articles-page.component';
 import { ListItemPostComponent } from './list-item-post/list-item-post.component';
 import { CreateArticlePageComponent } from './create-article-page/create-article-page.component';
 
-//TODO: any way to declare this in PageComponent instead?
-const childRoutes: Routes = [
+import { ArticleService } from './service/article.service';
+import { AdminGuardService } from './service/admin-guard.service';
+
+const userRoutes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: MainPageComponent },
   { path: 'article/name/:articleName', component: ArticlePageComponent },
   { path: 'article/id/:articleId', component: ArticlePageComponent },
-  { path: 'article/preview/:title/:name/:subtitle/:date/:content', component: ArticlePageComponent }, //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
   { path: 'allArticles', component: AllArticlesPageComponent },
-  { path: 'create', component: CreateArticlePageComponent }, //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
+]
+
+const adminRoutes: Routes = [
+  { path: 'create', component: CreateArticlePageComponent },
   { path: 'create/edit/:id/:title/:name/:subtitle/:date/:content', component: CreateArticlePageComponent },
   { path: 'create/prog/:title/:name/:subtitle/:date/:content', component: CreateArticlePageComponent },
+  { path: 'article/preview/:title/:name/:subtitle/:date/:content', component: ArticlePageComponent },
 ]
 
 const routes: Routes = [
-  { path: '', component: PageComponent, children: childRoutes },
+  { path: '', component: PageComponent, children: userRoutes },
+  { path: '', canActivate: [AdminGuardService], component: PageComponent, children: adminRoutes },
   { path: 'error', component: ErrorPageComponent },
 ]
 
@@ -66,7 +71,7 @@ const routes: Routes = [
     DisqusModule,
     SocialModule
   ],
-  providers: [ArticleService],
+  providers: [ArticleService, AdminGuardService],
   bootstrap: [AppComponent]
 })
 

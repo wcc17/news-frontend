@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, isDevMode } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ArticleService } from '../service/article.service';
 import { Article } from '../article/article.model';
@@ -17,7 +17,11 @@ export class CreateArticlePageComponent implements OnInit {
               private router: Router) { }
 
   ngOnInit() {
-    this.loadParams();
+    if(isDevMode()) {
+      this.loadParams();
+    } else {
+      this.router.navigate(['error']); //TODO: THIS SHOULD BE REDIRECTING TO PAGE NOT FOUND ERROR
+    }
   }
 
   loadParams(): void {
@@ -41,7 +45,6 @@ export class CreateArticlePageComponent implements OnInit {
     this.article.name = this.article.name.toLowerCase();
   }
 
-  //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   onSaveClick() {
     if(this.article.id) {
       this.updateArticle();
@@ -50,7 +53,6 @@ export class CreateArticlePageComponent implements OnInit {
     }
   }
 
-  //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   updateArticle() {
     this.articleService.updateArticle(this.article)
       .subscribe(
@@ -63,7 +65,6 @@ export class CreateArticlePageComponent implements OnInit {
     );
   }
 
-  //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   saveArticle() {
     this.articleService.createArticle(this.article)
       .subscribe(
