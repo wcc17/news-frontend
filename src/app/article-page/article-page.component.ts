@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, isDevMode } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../service/article.service';
 import { Article } from '../article/article.model';
@@ -16,7 +16,7 @@ const PREVIEW_ROUTE_URL: string = "preview";
 export class ArticlePageComponent implements OnInit {
   data: Object;
   loading: boolean;
-  preview: boolean = false; //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
+  preview: boolean = false;
   article: Article;
 
   constructor(@Inject(ArticleService) private articleService: ArticleService,
@@ -36,8 +36,9 @@ export class ArticlePageComponent implements OnInit {
       case NAME_ROUTE_URL:
         this.loadNameParam(this.route);
         break;
-      case PREVIEW_ROUTE_URL: //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
+      case PREVIEW_ROUTE_URL:
         this.loadPreviewParam(this.route);
+        break;
     }
   }
 
@@ -63,8 +64,8 @@ export class ArticlePageComponent implements OnInit {
     }
   }
 
-  //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
   loadPreviewParam(route: any) {
+    if(isDevMode()) {
       this.loading = false;
       this.preview = true;
 
@@ -79,6 +80,9 @@ export class ArticlePageComponent implements OnInit {
         this.article = new Article();
         this.onError('Error during routing');
       }
+    } else {
+      this.router.navigate(["error"]); //TODO: THIS SHOULD BE REDIRECTING TO PAGE NOT FOUND PAGE
+    }
   }
 
   loadArticleById(articleId: number) {
@@ -126,4 +130,9 @@ export class ArticlePageComponent implements OnInit {
     console.log(error);
     this.router.navigate(["error"]);
   }
+
+  _isDevMode(): boolean {
+    return isDevMode();
+  }
+
 }

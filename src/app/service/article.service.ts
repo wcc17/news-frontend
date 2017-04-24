@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { Headers, Http, Response, RequestOptions } from '@angular/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -51,33 +51,36 @@ export class ArticleService {
       .catch(this.handleError);
   }
 
-  //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   public createArticle(article: Article): Observable<string> {
-    let queryUrl: string = `${this.apiUrl}/create`;
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.http
-      .post(queryUrl, article, options)
-      .map((response:Response) => <any>response.headers.get('location'))
-      .catch(this.handleError);
+    if(isDevMode()) {
+      let queryUrl: string = `${this.apiUrl}/create`;
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+      let options = new RequestOptions({ headers: headers });
+      return this.http
+        .post(queryUrl, article, options)
+        .map((response:Response) => <any>response.headers.get('location'))
+        .catch(this.handleError);
+    }
   }
 
-  //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   public updateArticle(article: Article): Observable<void> {
-    let queryUrl: string = `${this.apiUrl}/update`;
-    let headers = new Headers({ 'Content-Type': 'application/json' });
-    let options = new RequestOptions({ headers: headers });
-    return this.http
-      .put(queryUrl, article, options)
-      .catch(this.handleError);
+    if(isDevMode()) {
+      let queryUrl: string = `${this.apiUrl}/update`;
+      let headers = new Headers({ 'Content-Type': 'application/json' });
+      let options = new RequestOptions({ headers: headers });
+      return this.http
+        .put(queryUrl, article, options)
+        .catch(this.handleError);
+    }
   }
 
-  //TODO: THIS NEEDS TO BE RESTRICTED IN PRODUCTION
   public deleteArticle(article: Article): Observable<void> {
-    let queryUrl: string = `${this.apiUrl}/delete?id=${article.id}`;
-    return this.http
-      .delete(queryUrl)
-      .catch(this.handleError);
+    if(isDevMode()) {
+      let queryUrl: string = `${this.apiUrl}/delete?id=${article.id}`;
+      return this.http
+        .delete(queryUrl)
+        .catch(this.handleError);
+    }
   }
 
   private extractArticleData(response: Response): Article {

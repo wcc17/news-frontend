@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, isDevMode } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainPageComponent } from '../main-page/main-page.component';
 import { CollapseModule } from 'ng2-bootstrap';
@@ -18,6 +18,10 @@ export class PageComponent implements OnInit {
 
   openArticle(): void {
     console.log("open article called");
+  }
+
+  _isDevMode(): boolean {
+    return isDevMode();
   }
 
 }
