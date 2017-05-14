@@ -43,6 +43,7 @@ const routes: Routes = [
   { path: '', component: PageComponent, children: userRoutes },
   { path: '', canActivate: [AdminGuardService], component: PageComponent, children: adminRoutes },
   { path: 'error', component: ErrorPageComponent },
+  { path: '**', redirectTo: '/error' }
 ]
 
 @NgModule({
