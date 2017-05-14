@@ -20,7 +20,7 @@ export class CreateArticlePageComponent implements OnInit {
     if(isDevMode()) {
       this.loadParams();
     } else {
-      this.router.navigate(['error']); //TODO: THIS SHOULD BE REDIRECTING TO PAGE NOT FOUND ERROR
+      this.router.navigate(['error']);
     }
   }
 
