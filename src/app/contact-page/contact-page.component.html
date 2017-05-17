@@ -1,3 +1,24 @@
-<p>
-  contact-page works!
-</p>
+<div class="container">
+  <div class="contact-input row">
+    <h1 id="title" >Contact Us</h1>
+  </div>
+  
+  <div class="contact-input row">
+    <h5>Name:</h5>
+    <input type="text" class="form-control" [(ngModel)]="this.name" required/>
+  </div>
+
+  <div class="contact-input row">
+    <h5>Email:</h5>
+    <input type="text" class="form-control" [(ngModel)]="this.email" required/>
+  </div>
+
+  <div class="contact-input row">
+    <h5>Message:</h5>
+    <textarea type="text" rows=10 class="form-control" [(ngModel)]="this.message" required></textarea>
+  </div>
+
+  <div class="contact-input row">
+    <button type="button" class="btn btn-primary" (click)="onSubmitClick()">Submit</button>
+  </div>
+</div>
