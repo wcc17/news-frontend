@@ -6,7 +6,7 @@ import { Component, Input, ElementRef, OnInit, Renderer } from '@angular/core';
     styleUrls: ['./disqus.component.css']
 })
 export class DisqusComponent implements OnInit {
-    public shortname: string = 'deplorablenews'; //lol. change to whatever disqus shortname, set this one up as a test account
+    public shortname: string = 'news'; //change to whatever disqus shortname, set this one up as a test account
     @Input() identifier: number;
 
     constructor(private el:ElementRef, private renderer:Renderer) { }
