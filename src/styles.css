@@ -2,7 +2,7 @@
 
 body {
     background-color: black;
-    background-image: url("assets/images/site/background_fade.png");
+    /*background-image: url("assets/images/site/background_fade.png");*/
     background-size: initial;
     background-repeat: no-repeat;
 }

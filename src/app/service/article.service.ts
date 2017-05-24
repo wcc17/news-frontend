@@ -6,8 +6,8 @@ import { Article } from '../article/article.model';
 
 @Injectable()
 export class ArticleService {
-  // apiUrl: string = "http://localhost:8080/article";
-  apiUrl: string = "http://104.236.209.190:8080/article";
+  apiUrl: string = "http://localhost:8080/article";
+  // apiUrl: string = "http://104.236.209.190:8080/article";
 
   constructor(public http: Http, private router: Router) { }
 
