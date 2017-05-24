@@ -20,7 +20,7 @@ import { PageComponent } from './page/page.component';
 import { AllArticlesPageComponent } from './all-articles-page/all-articles-page.component';
 import { ListItemPostComponent } from './list-item-post/list-item-post.component';
 import { CreateArticlePageComponent } from './create-article-page/create-article-page.component';
-import { ContactPageComponent } from './contact-page/contact-page.component';
+// import { ContactPageComponent } from './contact-page/contact-page.component';
 
 import { ArticleService } from './service/article.service';
 import { AdminGuardService } from './service/admin-guard.service';
@@ -31,7 +31,7 @@ const userRoutes: Routes = [
   { path: 'article/name/:articleName', component: ArticlePageComponent },
   { path: 'article/id/:articleId', component: ArticlePageComponent },
   { path: 'allArticles', component: AllArticlesPageComponent },
-  { path: 'contact', component: ContactPageComponent }
+  // { path: 'contact', component: ContactPageComponent }
 ]
 
 const adminRoutes: Routes = [
@@ -61,7 +61,7 @@ const routes: Routes = [
     AllArticlesPageComponent,
     ListItemPostComponent,
     CreateArticlePageComponent,  //TODO: THIS SHOULD BE RESTRICTED IN PRODUCTION
-    ContactPageComponent,
+    // ContactPageComponent,
   ],
   imports: [
     BrowserModule,
