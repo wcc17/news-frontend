@@ -1,10 +1,22 @@
+Just a general-use news website that I created to practice some web development "things". Uses Angular2/Typescript, a Spring-boot REST API to communicate with a MYSQL backend.
+
+![alt text](http://i.imgur.com/l6Qq2tW.png)
+
+![alt text](http://i.imgur.com/KbR2hgm.png)
+
+![alt text](http://i.imgur.com/r7euPtf.png)
+
+![alt text](http://i.imgur.com/n3HNV1D.png)
+
+![alt text](http://i.imgur.com/mCOIn32.png)
+
 # News
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.0.0-beta.32.3.
 
 ## Development server
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
+t
 ## Code scaffolding
 
 Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive/pipe/service/class/module`.
